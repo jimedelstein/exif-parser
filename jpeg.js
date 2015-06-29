@@ -2638,6 +2638,7 @@ this.JPEG.exifSpec = {
       JPEGInterchangeFormat = IFD1.entries[exifSpec.getTagId("JPEGInterchangeFormat")].value;
       thumbnailBlob = blobView.blob.slice(TIFFHeaderOffset + JPEGInterchangeFormat, TIFFHeaderOffset + JPEGInterchangeFormat + JPEGInterchangeFormatLength);
     }
+    if(typeof IFD0.entries === 'undefined') IFD0.entries = [{}];
 
     // Reads EXIF IFD
     if (IFD0.entries[exifSpec.getTagId("ExifTag")]) {
@@ -2645,14 +2646,15 @@ this.JPEG.exifSpec = {
     }
 
     // Reads GPS IFD
-    if(IFD0.entries[exifSpec.getTagId("GPSTag")]) {
+    if (IFD0.entries[exifSpec.getTagId("GPSTag")]) {
       GPSIFD = readIFD(blobView, TIFFHeaderOffset, IFD0.entries[exifSpec.getTagId("GPSTag")].value);
     }
 
     // Reads Interoperability IFD
-    if(IFD0.entries[exifSpec.getTagId("InteroperabilityTag")]) {
+    if (IFD0.entries[exifSpec.getTagId("InteroperabilityTag")]) {
       interoperabilityIFD = readIFD(blobView, TIFFHeaderOffset, IFD0.entries[exifSpec.getTagId("InteroperabilityTag")].value);
     }
+
 
     return {
       "IFD0" : IFD0.entries,
